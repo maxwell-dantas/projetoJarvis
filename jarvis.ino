@@ -18,109 +18,124 @@ int motorB_ENA = 3;
 int motorB_ENB = 2;
 
 struct Movimentos {
-  void velocidadeMax() {
-    analogWrite(motorA_ENA, 255);
-    analogWrite(motorA_ENB, 255);
-    analogWrite(motorB_ENA, 255);
-    analogWrite(motorB_ENB, 255);
-  }
+  private:
+    void motorA_Dianteiro_andarFrente(){
+      digitalWrite(motorA_IN1, HIGH);
+      digitalWrite(motorA_IN2, LOW);
+    }
 
-  void desligar() {
-    // PAR DIANTEIRO
-    digitalWrite(motorA_IN1, LOW);
-    digitalWrite(motorA_IN2, LOW);
-    digitalWrite(motorB_IN3, LOW);
-    digitalWrite(motorB_IN4, LOW);
+    void motorA_Dianteiro_andarTras(){
+      digitalWrite(motorA_IN1, LOW);
+      digitalWrite(motorA_IN2, HIGH);
+    }
 
-    // PAR TRASEIRO
-    digitalWrite(motorA_IN3, LOW);
-    digitalWrite(motorA_IN4, LOW);
-    digitalWrite(motorB_IN1, LOW);
-    digitalWrite(motorB_IN2, LOW);
-  }
+    void motorA_Traseiro_andarFrente(){
+      digitalWrite(motorA_IN3, LOW);
+      digitalWrite(motorA_IN4, HIGH);
+    }
 
-  void andarFrente(int timer) {
-    // PAR DIANTEIRO
-    digitalWrite(motorA_IN1, HIGH);
-    digitalWrite(motorA_IN2, LOW);
-    digitalWrite(motorB_IN3, LOW);
-    digitalWrite(motorB_IN4, HIGH);
+    void motorA_Traseiro_andarTras(){
+      digitalWrite(motorA_IN3, HIGH);
+      digitalWrite(motorA_IN4, LOW);
+    }
 
-    // PAR TRASEIRO
-    digitalWrite(motorA_IN3, LOW);
-    digitalWrite(motorA_IN4, HIGH);
-    digitalWrite(motorB_IN1, LOW);
-    digitalWrite(motorB_IN2, HIGH);
+    void motorB_Dianteiro_andarFrente() {
+      digitalWrite(motorB_IN3, LOW);
+      digitalWrite(motorB_IN4, HIGH);
+    }
 
-    this->velocidadeMax();
-    delay(timer);
-    this->desligar();
-  }
+    void motorB_Dianteiro_andarTras() {
+      digitalWrite(motorB_IN3, HIGH);
+      digitalWrite(motorB_IN4, LOW);
+    }
 
-  void andarTras(int timer) {
-    // PAR DIANTEIRO
-    digitalWrite(motorA_IN1, LOW);
-    digitalWrite(motorA_IN2, HIGH);
-    digitalWrite(motorB_IN3, HIGH);
-    digitalWrite(motorB_IN4, LOW);
+    void motorB_Traseiro_andarFrente() {
+      digitalWrite(motorB_IN1, LOW);
+      digitalWrite(motorB_IN2, HIGH);    
+    }
 
-    // PAR TRASEIRO
-    digitalWrite(motorA_IN3, HIGH);
-    digitalWrite(motorA_IN4, LOW);
-    digitalWrite(motorB_IN1, HIGH);
-    digitalWrite(motorB_IN2, LOW);
+    void motorB_Traseiro_andarTras() {
+      digitalWrite(motorB_IN1, HIGH);
+      digitalWrite(motorB_IN2, LOW);
+    }
 
-    this->velocidadeMax();
-    delay(timer);
-    this->desligar();
-  }
 
-  void girarDireitaFrente(int timer) {
-    // RODA DA FRENTE MOTOR B
-    digitalWrite(motorB_IN3, LOW);
-    digitalWrite(motorB_IN4, HIGH);
+    void velocidadeMax() {
+      analogWrite(motorA_ENA, 255); // MOTOR A DIANTEIRO
+      analogWrite(motorA_ENB, 235); // MOTOR A TRASEIRO
+      analogWrite(motorB_ENA, 245); // MOTOR B TRASEIRO
+      analogWrite(motorB_ENB, 245); // MOTOR B DIANTEIRO
+    }
 
-    // RODA DE TRÁS MOTOR B
-    digitalWrite(motorB_IN1, LOW);
-    digitalWrite(motorB_IN2, HIGH);
+    void desligar() {
+      // PAR DIANTEIRO
+      digitalWrite(motorA_IN1, LOW);
+      digitalWrite(motorA_IN2, LOW);
+      digitalWrite(motorB_IN3, LOW);
+      digitalWrite(motorB_IN4, LOW);
 
-    this->velocidadeMax();
-    delay(timer);
-    this->desligar();
-  }
+      // PAR TRASEIRO
+      digitalWrite(motorA_IN3, LOW);
+      digitalWrite(motorA_IN4, LOW);
+      digitalWrite(motorB_IN1, LOW);
+      digitalWrite(motorB_IN2, LOW);
+    }
 
-  void girarEsquerdaFrente(int timer) {
-    // RODA DA FRENTE MOTOR A
-    digitalWrite(motorA_IN1, HIGH);
-    digitalWrite(motorA_IN2, LOW);
+  public:
 
-    // RODA DE TRÁS MOTOR A
-    digitalWrite(motorA_IN3, LOW);
-    digitalWrite(motorA_IN4, HIGH);
+    void andarFrente(int timer) {
+      // PAR DIANTEIRO
+      this->motorA_Dianteiro_andarFrente();
+      this->motorB_Dianteiro_andarFrente();
 
-    this->velocidadeMax();
-    delay(timer);
-    this->desligar();
-  }
+      // PAR TRASEIRO
+      this->motorA_Traseiro_andarFrente();
+      this->motorB_Traseiro_andarFrente();
 
-  void giroPerfeitoAntiHorario(int timer) {
-    // PAR DIANTEIRO
-    digitalWrite(motorA_IN1, HIGH); // MOTOR A
-    digitalWrite(motorA_IN2, LOW);  // MOTOR A
-    digitalWrite(motorB_IN3, HIGH); // MOTOR B
-    digitalWrite(motorB_IN4, LOW);  // MOTOR B
+      this->velocidadeMax();
+      delay(timer);
+      this->desligar();
+    }
 
-    // PAR TRASEIRO
-    digitalWrite(motorA_IN3, LOW);  // MOTOR A
-    digitalWrite(motorA_IN4, HIGH); // MOTOR A
-    digitalWrite(motorB_IN1, HIGH); // MOTOR B
-    digitalWrite(motorB_IN2, LOW);  // MOTOR B
-    
-    this->velocidadeMax();
-    delay(timer);
-    this->desligar();
-  }
+    void andarTras(int timer) {
+      // PAR DIANTEIRO
+      this->motorA_Dianteiro_andarTras();
+      this->motorB_Dianteiro_andarTras();
 
+      // PAR TRASEIRO
+      this->motorA_Traseiro_andarTras();
+      this->motorB_Traseiro_andarTras();
+
+      this->velocidadeMax();
+      delay(timer);
+      this->desligar();
+    }
+
+    void girarDireitaFrente(int timer) {
+      this->motorB_Dianteiro_andarFrente();
+      this->motorB_Traseiro_andarFrente();
+      this->velocidadeMax();
+      delay(timer);
+      this->desligar();
+    }
+
+    void girarEsquerdaFrente(int timer) {
+      this->motorA_Dianteiro_andarFrente();
+      this->motorA_Traseiro_andarFrente();
+      this->velocidadeMax();
+      delay(timer);
+      this->desligar();
+    }
+
+    void giroPerfeitoHorario(int timer) {
+      this->motorB_Dianteiro_andarFrente();
+      this->motorB_Traseiro_andarFrente();
+      this->motorA_Dianteiro_andarTras();
+      this->motorA_Traseiro_andarTras();
+      this->velocidadeMax();
+      delay(timer);
+      this->desligar();
+    }
 };
 
 
@@ -148,7 +163,7 @@ void loop() {
   Movimentos jarvis;
   jarvis.andarFrente(5000);
   jarvis.andarTras(5000);
-  jarvis.girarDireitaFrente(5000);
-  jarvis.girarEsquerdaFrente(5000);
-  jarvis.giroPerfeitoAntiHorario(5000);
+  jarvis.girarDireitaFrente(10000);
+  jarvis.girarEsquerdaFrente(10000);
+  jarvis.giroPerfeitoHorario(20000);
 }
