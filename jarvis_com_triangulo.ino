@@ -142,11 +142,9 @@ struct Movimentos {
       this->giroPerfeitoHorario(3950);
     }
 
-    // ele precisa andar reto p frente, dar um giro de 120 e repetir
-    // fiz uma regra de 3 com base no quadrado (ele precisa de 3950ms p fazer um giro de 90)
     void triangulo() {
-        this->andarFrente(8000);
-        this->giroPerfeitoHorario(5267);
+        this->andarFrente(4000);
+        this->giroPerfeitoHorario(5000);
     }
 };
 
